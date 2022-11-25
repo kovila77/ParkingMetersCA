@@ -2,6 +2,9 @@
 using AutoMapper;
 using NUnit.Framework;
 using ParkingMetersCA.Application.Common.Mappings;
+using ParkingMetersCA.Application.ParkingMeters.Queries.GetParkingMeter;
+using ParkingMetersCA.Application.ParkingMeters.Queries.GetParkingMetersWithPagination;
+using ParkingMetersCA.Domain.Entities;
 
 namespace ParkingMetersCA.Application.UnitTests.Common.Mappings;
 public class MappingTests
@@ -24,10 +27,8 @@ public class MappingTests
     }
 
     [Test]
-    [TestCase(typeof(TodoList), typeof(TodoListDto))]
-    [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
-    [TestCase(typeof(TodoList), typeof(LookupDto))]
-    [TestCase(typeof(TodoItem), typeof(LookupDto))]
+    [TestCase(typeof(ParkingMeter), typeof(ParkingMeterDto))]
+    [TestCase(typeof(ParkingMeter), typeof(ParkingMeterAddressDto))]
     public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
     {
         var instance = GetInstanceOf(source);
