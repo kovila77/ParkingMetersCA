@@ -26,7 +26,13 @@ public class AddUsageOfParkingMeterCommandHandler : IRequestHandler<AddUsageOfPa
             throw new NotFoundException(nameof(ParkingMeter), request.Id);
         }
 
+        if (parkingMeter.Status != true)
+        {
+            throw new ParkingMeterDisabledException(request.Id);
+        }
+
         parkingMeter.Usages++;
+
         await _context.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;

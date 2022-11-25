@@ -26,7 +26,7 @@ public class EnableParkingMeterCommandHandler : IRequestHandler<EnableParkingMet
             throw new NotFoundException(nameof(ParkingMeter), request.Id);
         }
 
-        parkingMeter.Status = false;
+        parkingMeter.Status = true;
         await _context.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;

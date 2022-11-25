@@ -16,6 +16,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
                 { typeof(NotFoundException), HandleNotFoundException },
                 { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
                 { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
+                { typeof(ParkingMeterDisabledException), HandleParkingMeterDisabledException },
             };
     }
 
@@ -40,6 +41,23 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
             HandleInvalidModelStateException(context);
             return;
         }
+    }
+
+    private void HandleParkingMeterDisabledException(ExceptionContext context)
+    {
+        var exception = (ParkingMeterDisabledException)context.Exception;
+
+        var details = new ProblemDetails()
+        {
+            Status = StatusCodes.Status400BadRequest,
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+            Title = "To add usage, Parking Meter must be enabled.",
+            Detail = exception.Message
+        };
+
+        context.Result = new BadRequestObjectResult(details);
+
+        context.ExceptionHandled = true;
     }
 
     private void HandleValidationException(ExceptionContext context)
@@ -117,4 +135,5 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 
         context.ExceptionHandled = true;
     }
+
 }

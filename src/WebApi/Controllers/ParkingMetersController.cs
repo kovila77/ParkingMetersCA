@@ -2,6 +2,7 @@
 using ParkingMetersCA.Application.Common.Models;
 using ParkingMetersCA.Application.ParkingMeters.Commands.AddUsageOfParkingMeter;
 using ParkingMetersCA.Application.ParkingMeters.Commands.CreateParkingMeter;
+using ParkingMetersCA.Application.ParkingMeters.Queries.GetParkingMeter;
 using ParkingMetersCA.Application.ParkingMeters.Queries.GetParkingMeters;
 using ParkingMetersCA.Application.ParkingMeters.Queries.GetParkingMetersWithPagination;
 
@@ -9,9 +10,16 @@ namespace ParkingMetersCA.WebApi.Controllers;
 public class ParkingMetersController : ApiControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<PaginatedList<ParkingMeterDto>>> GetPrarkingMetersWithPagination([FromQuery] GetPrarkingMetersWithPaginationQuery query)
+    public async Task<ActionResult<PaginatedList<ParkingMeterAddressDto>>>
+        GetPrarkingMetersWithPagination([FromQuery] GetPrarkingMetersWithPaginationQuery query)
     {
         return await Mediator.Send(query);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ParkingMeterDto>> GetPrarkingMeter(int id)
+    {
+        return await Mediator.Send(new GetParkingMeterQuery(id));
     }
 
     [HttpPost]

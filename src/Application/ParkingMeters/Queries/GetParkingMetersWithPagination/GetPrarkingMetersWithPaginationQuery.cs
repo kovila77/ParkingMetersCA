@@ -7,13 +7,13 @@ using ParkingMetersCA.Application.Common.Models;
 using ParkingMetersCA.Application.ParkingMeters.Queries.GetParkingMetersWithPagination;
 
 namespace ParkingMetersCA.Application.ParkingMeters.Queries.GetParkingMeters;
-public record GetPrarkingMetersWithPaginationQuery : IRequest<PaginatedList<ParkingMeterDto>>
+public record GetPrarkingMetersWithPaginationQuery : IRequest<PaginatedList<ParkingMeterAddressDto>>
 {
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 10;
 }
 
-public class GetPrarkingMetersWithPaginationQueryHandler : IRequestHandler<GetPrarkingMetersWithPaginationQuery, PaginatedList<ParkingMeterDto>>
+public class GetPrarkingMetersWithPaginationQueryHandler : IRequestHandler<GetPrarkingMetersWithPaginationQuery, PaginatedList<ParkingMeterAddressDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -24,11 +24,11 @@ public class GetPrarkingMetersWithPaginationQueryHandler : IRequestHandler<GetPr
         _mapper = mapper;
     }
 
-    public async Task<PaginatedList<ParkingMeterDto>> Handle(GetPrarkingMetersWithPaginationQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<ParkingMeterAddressDto>> Handle(GetPrarkingMetersWithPaginationQuery request, CancellationToken cancellationToken)
     {
         return await _context.ParkingMeters
             .OrderBy(x => x.Address)
-            .ProjectTo<ParkingMeterDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<ParkingMeterAddressDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }
