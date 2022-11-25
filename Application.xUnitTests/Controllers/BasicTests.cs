@@ -18,7 +18,6 @@ public class BasicTests : IClassFixture<WebApplicationFactory<Program>>
     private readonly WebApplicationFactory<Program> _factory;
     private readonly ITestOutputHelper _output;
 
-    //public BasicTests(WebApplicationFactory<Program> factory, ITestOutputHelper output)
     public BasicTests(ITestOutputHelper output)
     {
         _output = output;
