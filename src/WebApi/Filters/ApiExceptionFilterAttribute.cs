@@ -51,7 +51,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         {
             Status = StatusCodes.Status400BadRequest,
             Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-            Title = "To add usage, Parking Meter must be enabled.",
+            Title = "To increment usage, Parking Meter must be enabled.",
             Detail = exception.Message
         };
 

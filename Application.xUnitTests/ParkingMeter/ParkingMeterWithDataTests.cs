@@ -123,8 +123,8 @@ public class ParkingMeterWithDataTests : IClassFixture<WebApplicationFactory<Pro
 
         Assert.NotEmpty(resultContentString);
 
+        _output.WriteLine("Checking that returned list is not empty...");
         var match = Regex.Match(resultContentString, """items":\s*\[\s*(.+)\s*\]""");
-
         Assert.True(match.Success && match.Groups.Count > 0 && string.IsNullOrEmpty(match.Groups[1].Value) != true);
     }
 }
