@@ -22,10 +22,10 @@ public class ParkingMeterWithDataTests : IClassFixture<WebApplicationFactory<Pro
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly ITestOutputHelper _output;
-    private readonly string _parkingMetersEndPoint = "/api/ParkingMeters";
-    private readonly string _enableEp = "Enable";
-    private readonly string _disableEp = "Disable";
-    private readonly string _addUsageEp = "AddUsage";
+    private readonly string _parkingMetersEndPoint = "/api/parking-meters";
+    private readonly string _enableEp = "enable";
+    private readonly string _disableEp = "disable";
+    private readonly string _addUsageEp = "add-usage";
 
     public ParkingMeterWithDataTests(ITestOutputHelper output)
     {
@@ -76,7 +76,7 @@ public class ParkingMeterWithDataTests : IClassFixture<WebApplicationFactory<Pro
         Assert.False(parkingMeterDto.Status);
 
         _output.WriteLine("Enabling...");
-        response = await client.PutAsync($"{_parkingMetersEndPoint}/{_enableEp}/{id}", null);
+        response = await client.PutAsync($"{_parkingMetersEndPoint}/{id}/{_enableEp}", null);
         response.EnsureSuccessStatusCode();
 
         _output.WriteLine("Check that enable...");
@@ -89,7 +89,7 @@ public class ParkingMeterWithDataTests : IClassFixture<WebApplicationFactory<Pro
         var oldUsage = parkingMeterDto.Usages;
 
         _output.WriteLine("Adding usage...");
-        response = await client.PutAsync($"{_parkingMetersEndPoint}/{_addUsageEp}/{id}", null);
+        response = await client.PutAsync($"{_parkingMetersEndPoint}/{id}/{_addUsageEp}", null);
         response.EnsureSuccessStatusCode();
 
         _output.WriteLine("Checking usage changes...");
@@ -100,7 +100,7 @@ public class ParkingMeterWithDataTests : IClassFixture<WebApplicationFactory<Pro
         Assert.True(oldUsage + 1 == parkingMeterDto.Usages);
 
         _output.WriteLine("Disabling...");
-        response = await client.PutAsync($"{_parkingMetersEndPoint}/{_disableEp}/{id}", null);
+        response = await client.PutAsync($"{_parkingMetersEndPoint}/{id}/{_disableEp}", null);
         response.EnsureSuccessStatusCode();
 
         _output.WriteLine("Checking that disabled...");

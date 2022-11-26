@@ -7,6 +7,8 @@ using ParkingMetersCA.Application.ParkingMeters.Queries.GetParkingMeters;
 using ParkingMetersCA.Application.ParkingMeters.Queries.GetParkingMetersWithPagination;
 
 namespace ParkingMetersCA.WebApi.Controllers;
+
+[Route("api/parking-meters")]
 public class ParkingMetersController : ApiControllerBase
 {
     [HttpGet]
@@ -28,7 +30,7 @@ public class ParkingMetersController : ApiControllerBase
         return await Mediator.Send(command);
     }
 
-    [HttpPut("Enable/{id}")]
+    [HttpPut("{id}/enable")]
     public async Task<ActionResult> EnableParkingMeter(int id)
     {
         await Mediator.Send(new EnableParkingMeterCommand(id));
@@ -36,7 +38,7 @@ public class ParkingMetersController : ApiControllerBase
         return NoContent();
     }
 
-    [HttpPut("Disable/{id}")]
+    [HttpPut("{id}/disable")]
     public async Task<ActionResult> DisableParkingMeter(int id)
     {
         await Mediator.Send(new DisableParkingMeterCommand(id));
@@ -44,7 +46,7 @@ public class ParkingMetersController : ApiControllerBase
         return NoContent();
     }
 
-    [HttpPut("AddUsage/{id}")]
+    [HttpPut("{id}/add-usage")]
     public async Task<ActionResult> AddUsageParkingMeter(int id)
     {
         await Mediator.Send(new AddUsageOfParkingMeterCommand(id));
